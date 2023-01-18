@@ -14,7 +14,7 @@ class MeView(RetrieveAPIView):
 
 
 class ChangePasswordView(UpdateAPIView):
-
+    
     queryset = User.objects.all()
     permission_classes = (IsAuthenticated,)
     serializer_class = ProfileEditSerializer
@@ -24,3 +24,8 @@ class UpdateProfileView(UpdateAPIView):
     queryset = User.objects.all()
     permission_classes = (IsAuthenticated,)
     serializer_class = UpdateUserSerializer
+
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)

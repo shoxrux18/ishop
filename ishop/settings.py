@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import datetime
 import environ
 
 env = environ.Env(
@@ -47,12 +48,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework_simplejwt',
     'common',
     'account',
     'main',
     'cart',
-    'django_filters'
-    
+    'django_filters',
+    'djoser'
     
 ]
 
@@ -92,7 +94,15 @@ WSGI_APPLICATION = 'ishop.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db()
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASS'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
+    }
+
 }
 
 
@@ -163,7 +173,10 @@ REST_FRAMEWORK = {
         
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication'
+        'rest_framework.authentication.TokenAuthentication',
+        
+    
+
     ],
     'DEFAULT_PERMISSION_CLASSES': [
     'rest_framework.permissions.AllowAny',
@@ -171,3 +184,11 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 12
 }
+SIMPLE_JWT = {
+   'AUTH_HEADER_TYPES': ('JWT',),
+}
+
+try:
+    from local_settings import *
+except ImportError:
+    pass

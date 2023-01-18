@@ -29,3 +29,9 @@ class DistrictListView(ListAPIView):
             return Response({
             'category': DistrictSerializer(District.objects.filter(region=pk),many=True).data
         })
+
+
+
+
+
+    

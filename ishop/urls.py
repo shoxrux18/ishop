@@ -23,7 +23,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("docs/",include_docs_urls(title="DOC",permission_classes = ())),
     path('',MainIndex.as_view(),name='index'),
-    path('api/',include([
+    path('api-auth/', include('rest_framework.urls')),
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.jwt')),
+    path('api/',include([        
         path('',include('main.urls')),
         path('account/',include('account.urls')),
         path('cart/',include('cart.urls')),
